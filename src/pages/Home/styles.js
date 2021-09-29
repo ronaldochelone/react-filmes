@@ -1,10 +1,9 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
-
-background-color: #192a56;
-flex: 1;
-padding: 4px 0;
+    background-color: #192a56;
+    flex: 1;
+    padding: 4px 0;
 `;
 
 export const SchearchContainer  = styled.View`
@@ -33,7 +32,6 @@ export const SearchButton       = styled.TouchableOpacity`
     justify-content: center;
 `;
 
-
 export const Title = styled.Text`
     padding-top:20px ;
     padding-bottom: 8px;
@@ -48,17 +46,13 @@ export const BannerButton = styled.TouchableOpacity``;
 
 export const Banner = styled.Image`
 
-    height: 150px;
+    height: 190px;
     border-radius: 6px;
     margin: 0 14px;
 `;
 
-
 export const SliderMovie = styled.FlatList`
-
     height: 250px;
     padding: 0 14px;
-
-
 `;
 
