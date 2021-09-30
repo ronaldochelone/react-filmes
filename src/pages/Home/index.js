@@ -6,7 +6,7 @@ import Header       from '../../components/Header';
 import SliderItem   from '../../components/SliderItem';
 import api, { key } from '../../services/api';
 import { getListMovies, randomBanner } from '../../utils/movie'
-
+import { useNavigation } from '@react-navigation/native';
 function Home() {
 
     const [ nowMovies, setNowMovies]            = useState([]);
@@ -14,8 +14,8 @@ function Home() {
     const [ topMovies, setTopMovies]            = useState([]);
     const [ loading, setLoading]                = useState(true);
     const [ bannerMovie, setBannerMovie]        = useState({});
-
-
+    
+    const navitation  =   useNavigation();
 
     
     useEffect(()=>{
@@ -53,7 +53,7 @@ function Home() {
             //Verifica se a pagina está ativa se não não iniciamos os carregamentos
             if(isActive)
             {
-                const nowList       = getListMovies(5,nowData.data.results);
+                const nowList       = getListMovies(20,nowData.data.results);
                 const popularList   = getListMovies(10,popularData.data.results);
                 const topList       = getListMovies(10,topData.data.results);
                 
@@ -64,32 +64,24 @@ function Home() {
                 setPopularMovies(popularList);
                 setTopMovies(topList);
                 setLoading(false);
-            }
-            
+            }            
         }
 
         getMovies();
 
-
-
         return ()=> {
-
-            /* 
-                ::: Quando trocamos de tela realizamos a chamada da função anonima. ::: 
-            */
-
+            //::: Quando trocamos de tela realizamos a chamada da função anonima. ::: 
             // Informamos que não está mais ativa a pagina
             isActive = false;
-
             // Abortamos todas as chamadas assíncronas
             ac.abort();
         }
-
-
-
     },[]);
 
 
+    function navegateDetailsPage(item) {
+        navitation.navigate('Detail',{id:item.id});        
+    }
 
     // Verifica se o app está carregando
     if(loading) {
@@ -103,61 +95,61 @@ function Home() {
 
 
     return (
-        <Container>
-            <Header title="Os melhores Filmes"/>
-            <SchearchContainer>
-                <Input 
-                    placeholder="Ex: Filmes e Series"
-                    placeholderTextColor="#ddd"
-                />
-                <SearchButton>
-                    <Feather name="search" size={30} color="#FFF" />
-                </SearchButton>
-            </SchearchContainer>
-
-
-            <ScrollView showsVerficalScrollIndicator={false}>
-                <Title> Em Cartaz </Title>
-                <BannerButton activeOpacity={0.9} onPress={() => alert('Merlin')}>
-                    <Banner
-                        resizeMethod="resize"
-                        //source={{ uri: `https://epipoca.com.br/wp-content/uploads/2021/05/As-Aventuras-de-Merlin-Divulgacao.jpg`}}
-                        source={ {uri: `https://image.tmdb.org/t/p/original${bannerMovie.poster_path}`} }                    
-
+            <Container>
+                <Header title="Os melhores Filmes"/>
+                <SchearchContainer>
+                    <Input 
+                        placeholder="Ex: Filmes e Series"
+                        placeholderTextColor="#ddd"
                     />
-                </BannerButton>
+                    <SearchButton>
+                        <Feather name="search" size={30} color="#FFF" />
+                    </SearchButton>
+                </SchearchContainer>
 
-                <SliderMovie
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={nowMovies}
-                    renderItem={ ({item})=> <SliderItem data={item}/>}
-                    keyExtrator={(item) => String(item.id)}
-                />             
 
-                <Title> Populares </Title>
+                <ScrollView showsVerficalScrollIndicator={false}>
+                    <Title> Em Cartaz </Title>
+                    <BannerButton activeOpacity={0.9} onPress={ () => navegateDetailsPage(bannerMovie) }>
+                        <Banner
+                            resizeMethod="resize"
+                            //source={{ uri: `https://epipoca.com.br/wp-content/uploads/2021/05/As-Aventuras-de-Merlin-Divulgacao.jpg`}}
+                            source={ {uri: `https://image.tmdb.org/t/p/original${bannerMovie.poster_path}`} }                    
 
-                <SliderMovie
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={popularMovies}
-                    renderItem={ ({item})=> <SliderItem data={item}/>}
-                    keyExtrator={(item) => String(item.id)}
-                /> 
+                        />
+                    </BannerButton>
 
-                <Title> Mais Votados </Title>
+                    <SliderMovie
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={nowMovies}
+                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } /> }
+                        keyExtrator={(item) => String(item.id)}
+                    />             
 
-                <SliderMovie
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={topMovies}
-                    renderItem={ ({item})=> <SliderItem data={item}/>}
-                    keyExtrator={(item) => String(item.id)}
-                /> 
+                    <Title> Populares </Title>
 
-            </ScrollView>
+                    <SliderMovie
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={popularMovies}
+                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } />}
+                        keyExtrator={(item) => String(item.id)}
+                    /> 
 
-        </Container>
+                    <Title> Mais Votados </Title>
+
+                    <SliderMovie
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        data={topMovies}
+                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } />}
+                        keyExtrator={(item) => String(item.id)}
+                    /> 
+
+                </ScrollView>
+
+            </Container>
     )
 }
 

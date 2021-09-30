@@ -6,4 +6,4 @@ export const Container = styled.View`
     padding: 4px 0;
 `;
 
-export const Title = styled.Text``;
+export const Header  =styled.View``
