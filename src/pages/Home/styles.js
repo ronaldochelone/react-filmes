@@ -15,7 +15,7 @@ export const SchearchContainer  = styled.View`
     margin-bottom: 8px;
 `;
 
-export const Input              = styled.TextInput`
+export const Input = styled.TextInput`
     background-color: rgba(255,255,255,0.4);
     width: 85%;
     height: 50px;
@@ -25,7 +25,7 @@ export const Input              = styled.TextInput`
     color: #FFF;
 `;
 
-export const SearchButton       = styled.TouchableOpacity`
+export const SearchButton = styled.TouchableOpacity`
     width: 15%;
     height: 50px;
     align-items: center;
@@ -45,7 +45,6 @@ export const Title = styled.Text`
 export const BannerButton = styled.TouchableOpacity``;
 
 export const Banner = styled.Image`
-
     height: 190px;
     border-radius: 6px;
     margin: 0 14px;

@@ -1,12 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { ScrollView, ActivityIndicator } from 'react-native';
-import { Container, SchearchContainer, Input, SearchButton, Title, BannerButton, Banner, SliderMovie } from './styles';
+import React, { 
+            useState, 
+            useEffect 
+        }           from "react";
+import  { 
+            ScrollView, 
+            ActivityIndicator 
+        }           from 'react-native';
+import  {   Container, 
+            SchearchContainer, 
+            Input, 
+            SearchButton, 
+            Title, 
+            BannerButton, 
+            Banner, 
+            SliderMovie 
+        }           from './styles';
+
 import { Feather }  from '@expo/vector-icons';
 import Header       from '../../components/Header';
 import SliderItem   from '../../components/SliderItem';
 import api, { key } from '../../services/api';
 import { getListMovies, randomBanner } from '../../utils/movie'
 import { useNavigation } from '@react-navigation/native';
+
 function Home() {
 
     const [ nowMovies, setNowMovies]            = useState([]);
@@ -79,8 +95,8 @@ function Home() {
     },[]);
 
 
-    function navegateDetailsPage(item) {
-        navitation.navigate('Detail',{id:item.id});        
+    function navigateDetailsPage(item) {
+        navitation.navigate('Detail',{ id:item.id });
     }
 
     // Verifica se o app está carregando
@@ -110,7 +126,7 @@ function Home() {
 
                 <ScrollView showsVerficalScrollIndicator={false}>
                     <Title> Em Cartaz </Title>
-                    <BannerButton activeOpacity={0.9} onPress={ () => navegateDetailsPage(bannerMovie) }>
+                    <BannerButton activeOpacity={0.9} onPress={ () => navigateDetailsPage(bannerMovie) }>
                         <Banner
                             resizeMethod="resize"
                             //source={{ uri: `https://epipoca.com.br/wp-content/uploads/2021/05/As-Aventuras-de-Merlin-Divulgacao.jpg`}}
@@ -123,7 +139,7 @@ function Home() {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         data={nowMovies}
-                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } /> }
+                        renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } /> }
                         keyExtrator={(item) => String(item.id)}
                     />             
 
@@ -133,7 +149,7 @@ function Home() {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         data={popularMovies}
-                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } />}
+                        renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } />}
                         keyExtrator={(item) => String(item.id)}
                     /> 
 
@@ -143,7 +159,7 @@ function Home() {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                         data={topMovies}
-                        renderItem={ ({item})=> <SliderItem data={item} navegatePage={()=> navegateDetailsPage(item) } />}
+                        renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } />}
                         keyExtrator={(item) => String(item.id)}
                     /> 
 
