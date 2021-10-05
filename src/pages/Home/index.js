@@ -30,8 +30,12 @@ function Home() {
     const [ topMovies, setTopMovies]            = useState([]);
     const [ loading, setLoading]                = useState(true);
     const [ bannerMovie, setBannerMovie]        = useState({});
-    
-    const navitation  =   useNavigation();
+
+    /* Estado do campo de pesquisa */
+    const [search, setSearch]                   = useState('');
+
+
+    const navigation  =   useNavigation();
 
     
     useEffect(()=>{
@@ -96,8 +100,22 @@ function Home() {
 
 
     function navigateDetailsPage(item) {
-        navitation.navigate('Detail',{ id:item.id });
+        navigation.navigate('Detail',{ id:item.id });
     }
+
+
+    function handlerSearchMovie() {
+
+        if(search ==='') {
+            alert('Preencha o campo de pesquisa');
+            return;
+        }
+
+        navigation.navigate('Search',{name:search});
+        setSearch('');
+    }
+
+
 
     // Verifica se o app está carregando
     if(loading) {
@@ -113,12 +131,15 @@ function Home() {
     return (
             <Container>
                 <Header title="Os melhores Filmes"/>
+                
                 <SchearchContainer>
                     <Input 
                         placeholder="Ex: Filmes e Series"
                         placeholderTextColor="#ddd"
+                        value={search}
+                        onChangeText={(text) =>setSearch(text)}
                     />
-                    <SearchButton>
+                    <SearchButton onPress={handlerSearchMovie}>
                         <Feather name="search" size={30} color="#FFF" />
                     </SearchButton>
                 </SchearchContainer>
