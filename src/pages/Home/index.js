@@ -70,8 +70,8 @@ function Home() {
             if(isActive)
             {
                 const nowList       = getListMovies(20,nowData.data.results);
-                const popularList   = getListMovies(10,popularData.data.results);
-                const topList       = getListMovies(10,topData.data.results);
+                const popularList   = getListMovies(20,popularData.data.results);
+                const topList       = getListMovies(20,topData.data.results);
                 
                 // Seta um numero aleatório para ramdomizar o banner principal
                 setBannerMovie(nowData.data.results[randomBanner(nowData.data.results)]);
@@ -140,7 +140,7 @@ function Home() {
                         showsHorizontalScrollIndicator={false}
                         data={nowMovies}
                         renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } /> }
-                        keyExtrator={(item) => String(item.id)}
+                        keyExtrator={(item) => String(item.id.toString())}
                     />             
 
                     <Title> Populares </Title>
@@ -150,7 +150,7 @@ function Home() {
                         showsHorizontalScrollIndicator={false}
                         data={popularMovies}
                         renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } />}
-                        keyExtrator={(item) => String(item.id)}
+                        keyExtrator={(item) => String(item.id.toString())}
                     /> 
 
                     <Title> Mais Votados </Title>
@@ -160,7 +160,7 @@ function Home() {
                         showsHorizontalScrollIndicator={false}
                         data={topMovies}
                         renderItem={ ({item})=> <SliderItem data={item} navigatePage={()=> navigateDetailsPage(item) } />}
-                        keyExtrator={(item) => String(item.id)}
+                        keyExtrator={(item) => String(item.id.toString())}
                     /> 
 
                 </ScrollView>

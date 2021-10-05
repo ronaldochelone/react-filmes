@@ -12,12 +12,14 @@ import  {
             Description
         } from './styles';
 
+import { ScrollView, Modal } from 'react-native';
+
 import { Feather, Ionicons} from '@expo/vector-icons';
 
 import { useNavigation, useRoute} from '@react-navigation/native';
 import api, { key } from '../../services/api';
 
-import { ScrollView, Modal } from 'react-native';
+
 import Stars from 'react-native-stars';
 import Genres from "../../components/Genres";
 import ModalLink from "../../components/ModalLink";
@@ -52,12 +54,10 @@ function Detail() {
             }
         }
 
-
         if(isActive) {
             getMovies();
         }
         
-
         return () => {
             isActive = false;
         }
@@ -71,7 +71,6 @@ function Detail() {
                 <HeaderButton activeOpacity={0.7} onPress={ ()=> navigation.goBack() }>
                     <Feather name="arrow-left" size={28} color="#FFF"/>
                 </HeaderButton>
-
                 <HeaderButton>
                    <Ionicons
                     name="bookmark"
@@ -112,26 +111,24 @@ function Detail() {
                     data={movie?.genres}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    keyExtrator={(item) => String(item.id)} 
+                    keyExtrator={(item) => String(item.id.toString())} 
                     renderItem={ ({item}) =><Genres data={item} /> }               
             />
 
-        
             <ScrollView showsVerticalScrollIndicator={false} >
                 <Title>Descrição</Title>
-                <Description>{movie.overview}</Description>
+                <Description>{movie?.overview}</Description>
             </ScrollView>
 
 
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={openLink}
-            >
-
-                <ModalLink/>
+            <Modal animationType="slide" transparent={true} visible={openLink} >
+                <ModalLink
+                    link={movie.homepage}
+                    title={movie?.title}
+                    closeModal={ ()=>setOpenLink(false) } 
+                >
+                </ModalLink>
             </Modal>
-
 
         </Container>
     )
