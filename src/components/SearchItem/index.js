@@ -6,6 +6,13 @@ function SearchItem( { data, navigatePage } ) {
 
     function detailMovie() {
 
+        // Verifica se o filme tem data de lançamento
+        if(data.release_date ==='') {
+            alert('Filme ainda sem data');
+            return;
+        }
+
+
         navigatePage(data);
     }
 

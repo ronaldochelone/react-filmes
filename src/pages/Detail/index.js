@@ -24,20 +24,26 @@ import Stars from 'react-native-stars';
 import Genres from "../../components/Genres";
 import ModalLink from "../../components/ModalLink";
 
+import { saveMovie, hasMovie } from '../../utils/storage'
+
+
+
 function Detail() {
 
     const navigation  = useNavigation();
     const route       = useRoute();
 
     // Criando o stado 
-    const [movie, setMovie]         = useState({});
-    const [openLink, setOpenLink]   = useState(false);
+    const [movie, setMovie]                 = useState({});
+    const [openLink, setOpenLink]           = useState(false);
+    const [favoritedMovie, setFavoritedMovie] = useState(false);
 
     useEffect(()=>{
 
         let isActive = true;
 
         async function getMovies() {
+
             const response = await api.get(`/movie/${route.params?.id}`, {
                 params:{
                     api_key:key,
@@ -51,6 +57,10 @@ function Detail() {
 
             if(isActive) {
                 setMovie(response.data);
+                
+                // Verifica se o filme esta na lista de favoritos
+                const isFavorite = await hasMovie(response.data);                
+                setFavoritedMovie(isFavorite);
             }
         }
 
@@ -61,23 +71,42 @@ function Detail() {
         return () => {
             isActive = false;
         }
-
-
+        
     });
 
-    return (
+
+    async function favoriteMovie(movie) {
+        await saveMovie('@react-filmes',movie);
+        alert('Filme salvo na lista de favorito.');
+
+    }
+
+
+
+    return ( 
         <Container>
             <Header>
                 <HeaderButton activeOpacity={0.7} onPress={ ()=> navigation.goBack() }>
                     <Feather name="arrow-left" size={28} color="#FFF"/>
                 </HeaderButton>
-                <HeaderButton>
-                   <Ionicons
-                    name="bookmark"
-                    size={28}
-                    color="#FFF"                   
-                   />
+                
+                <HeaderButton onPress={ ()=>favoriteMovie(movie) }>
+                   
+                   { favoritedMovie ? (
+                        <Ionicons
+                            name="bookmark"
+                            size={28}
+                            color="#FFF"                   
+                        />
+                    ) : (
+                        <Ionicons
+                            name="bookmark-outline"
+                            size={28}
+                            color="#FFF"                   
+                        />
+                   )}
                 </HeaderButton>
+
             </Header>
 
             <Banner
