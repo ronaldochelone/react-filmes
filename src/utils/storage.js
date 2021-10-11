@@ -11,9 +11,7 @@ export async function getMoviesSave(key) {
     return moviesSave;
 }
 
-
 // Salvar um novo filme. 
-
 export async function saveMovie(key,newMovie) {
 
     let moviesStored = await getMoviesSave(key);
@@ -32,7 +30,6 @@ export async function saveMovie(key,newMovie) {
     await AsyncStorage.setItem(key,JSON.stringify(moviesStored));
     console.log('Fimles salvos com sucesso.')
 }
-
 
 // Deletear algum filme especifico.
 export async function deleteMovie(id) {
@@ -54,10 +51,7 @@ export async function deleteMovie(id) {
     return myMovies;
 }
 
-
-
 // Filtrar algum filme se já esta salvo.
-
 export async function hasMovie(movie) {
 
     let moviesStored = await getMoviesSave('@react-filmes');
