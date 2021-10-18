@@ -8,9 +8,8 @@ export const Container = styled.View`
 export const Title = styled.Text`
     color: #FFF
     font-size : ${props => props.size}px
-    font-weight:bold
+    font-weight:bold;
 `;
-
 
 export const RateContainer = styled.View`
     flex-direction: row;
@@ -18,14 +17,11 @@ export const RateContainer = styled.View`
     padding: 8px 0;
 `;
 
-
 export const Rate = styled.Text`
     color:#FFF
     font-size: 12px;
-    padding-left:4px
-
+    padding-left:4px;
 `;
-
 
 export const ActionContainer = styled.View`
     flex-direction: row;
@@ -40,7 +36,6 @@ export const DetailButton = styled.TouchableOpacity`
     align-items:center;
     border-radius:30px;
 `;
-
 
 export const DeleteButton = styled.TouchableOpacity`
     width:15%;
